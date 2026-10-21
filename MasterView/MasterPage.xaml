@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DailyExpense.MasterView.MasterPage"
+             Title="MasterPage">
+    <Grid RowDefinitions="60,*,50">
+
+        <!-- HEADER -->
+        <Grid Grid.Row="0"
+              BackgroundColor="#0067EE">
+            <Label Text="Daily Expense"
+                   TextColor="White"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   x:Name="lblWelcome" />
+
+            <Image x:Name="imgBack"
+                   Source="back_arrow.png"
+                   HeightRequest="20"
+                   WidthRequest="20"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Margin="15,0,0,0"
+                   IsVisible="True">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label x:Name="lblMenu"
+                   Text="☰"
+                   TextColor="White"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   Margin="15,0,0,0"
+                   IsVisible="False">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMenuClicked" />
+                </Label.GestureRecognizers>
+            </Label>
+
+
+            <Label Text="Logout"
+                   TextColor="White"
+                   FontSize="13"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End"
+                   Margin="0,0,15,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLogoutClicked" />
+                </Label.GestureRecognizers>
+            </Label>
+            
+            
+            
+            
+        </Grid>
+
+        <!-- YAHAN HAR PAGE KA CONTENT AAYEGA -->
+        <ContentView Grid.Row="1"
+                     x:Name="PageContent" />
+        
+        
+
+        <!-- FOOTER -->
+        <Grid Grid.Row="2"
+              BackgroundColor="#ECECEC">
+            <Label Text="© 2026 Daily Expense App"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   FontSize="12" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

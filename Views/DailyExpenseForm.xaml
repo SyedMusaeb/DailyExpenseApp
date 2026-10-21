@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DailyExpense.Views.DailyExpenseForm">
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Start"
+                             Spacing="8"
+                             Padding="10,5,10,10">
+
+            <Border BackgroundColor="#0067EE"
+                    HeightRequest="28"
+                    WidthRequest="80"
+                    HorizontalOptions="End"
+                    Padding="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="13" />
+                </Border.StrokeShape>
+                <Label Text="View List"
+                       TextColor="White"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnViewListClicked" />
+                </Border.GestureRecognizers>
+            </Border>
+
+
+
+            <Label Text="Category"
+                   Margin="0,0,0,0" />
+            <Border x:Name="borderCategory"
+                Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="12,0"
+                    HeightRequest="48">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Picker Grid.Column="0"
+                            x:Name="pickerCategory"
+                            Title="Select"
+                            TitleColor="Gray"
+                            TextColor="Black"
+                            FontSize="15"
+                            BackgroundColor="Transparent"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Fill" />
+
+                    <Label Grid.Column="1"
+                           Text="▼"
+                           FontSize="12"
+                           TextColor="Gray"
+                           VerticalOptions="Center"
+                           Margin="0,0,5,0" />
+                </Grid>
+            </Border>
+
+            <Label Text="Saman Ka Name"
+                   Margin="0,0,0,1" 
+                   />
+
+            <Border x:Name="borderSamanName" 
+                    Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="samankaname.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <Entry Grid.Column="1"
+                           Placeholder="Enter Your Saman Name"
+                           Margin="0,0,0,0"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           x:Name="txtsamanname"
+                           />
+                </Grid>
+            </Border>
+
+            <Label Text="Saman Ka Weight"
+                   Margin="0,0,0,1" />
+
+            <Border x:Name="borderWeight"
+                    Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="waight.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <Entry Grid.Column="1"
+                           x:Name="txtsamanweight"
+                           Placeholder="Weight"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <Label Text="Amount"
+                   Margin="0,0,0,1" />
+
+            <Border  x:Name="borderAmount" 
+                     Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="rupessign.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <Entry Grid.Column="1"
+                           Placeholder="Enter Your Amount"
+                           Margin="0,0,0,0"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           x:Name="txtamount" 
+                           Keyboard="Numeric"
+                           MaxLength="10"
+                           />
+                </Grid>
+            </Border>
+
+            <Label Text="Date"
+                   Margin="0,0,0,1" />
+
+            <Border Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="datepicker.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <DatePicker Grid.Column="1"
+                                x:Name="dpDate"
+                                Format="dd/MM/yyyy"
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center"
+                                />
+                </Grid>
+            </Border>
+
+            <Button Margin="0,10,0,0"
+                    Text="Submit"
+                    BackgroundColor="#0067EE"
+                    x:Name="submit"
+                    Clicked="expense_Clicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

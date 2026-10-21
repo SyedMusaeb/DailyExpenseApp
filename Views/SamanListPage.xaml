@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DailyExpense.Views.SamanListPage">
+    <VerticalStackLayout>
+        <Grid RowDefinitions="Auto,Auto,Auto,*"
+              Padding="15">
+
+            <Border Grid.Row="0"
+                Stroke="#0067EE"
+                    BackgroundColor="#EAF2FF"
+                    Padding="15,10"
+                    HeightRequest="60">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0"
+                           Text="Total Expense"
+                           FontSize="18"
+                           TextColor="#0067EE"
+                           VerticalOptions="Center"
+                           x:Name="lblusername"
+                           FontAttributes="Italic"
+                           />
+                    <Label Grid.Column="1"
+                           x:Name="lblTotalAmount"
+                           Text="₹ 0"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#0067EE"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- MONTH FILTER -->
+            <Border Grid.Row="1"
+                    Stroke="#E0E0E0"
+                    BackgroundColor="#F5F5F5"
+                    Padding="10"
+                    HeightRequest="45"
+                    Margin="0,8,0,10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Label Grid.Column="0"
+                           Text="◀"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           Padding="10,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPreviousMonth" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="1"
+                           x:Name="lblSelectedMonth"
+                           Text="September 2026"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Label Grid.Column="2"
+                           Text="▶"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           Padding="10,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnNextMonth" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Border>
+
+            <!-- MONTH TOTAL -->
+            <Border Grid.Row="2"
+                    Stroke="#00A651"
+                    BackgroundColor="#E6F7EC"
+                    Padding="15,8"
+                    HeightRequest="45"
+                    Margin="0,0,0,10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label x:Name="lblMonthLabel"
+                           Text="This Month"
+                           FontSize="13"
+                           TextColor="#00A651"
+                           VerticalOptions="Center" />
+                    <Label Grid.Column="1"
+                           x:Name="lblMonthTotal"
+                           Text="₹ 0"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#00A651"
+                           VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- HEADER --><!--
+            <Label Grid.Row="1"
+                   Text="Saman"
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   Margin="0,0,0,10" />-->
+
+            <!-- LIST -->
+            <CollectionView Grid.Row="3"
+                            x:Name="cvSamanList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="#E0E0E0"
+                                BackgroundColor="White"
+                                Padding="12"
+                                Margin="0,5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="14" />
+                            </Border.StrokeShape>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCategoryTapped" />
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="40,*,Auto">
+
+                                <!-- ICON -->
+                                <Image Grid.Column="0"
+                                       Source="{Binding CategoryIcon}"
+                                       HeightRequest="24"
+                                       WidthRequest="24"
+                                       VerticalOptions="Center" />
+
+                                <!-- CATEGORY NAME + MONTH -->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Margin="12,0,0,0"
+                                                     VerticalOptions="Center">
+                                    <Label Text="{Binding CategoryName}"
+                                           FontAttributes="Bold"
+                                           FontSize="15" />
+                                    <Label Text="{Binding MonthYear}"
+                                           FontSize="12"
+                                           TextColor="Gray" />
+                                </VerticalStackLayout>
+
+                                <!-- AMOUNT -->
+                                <Label Grid.Column="2"
+                                       Text="{Binding TotalAmount, StringFormat='₹ {0:N0}'}"
+                                       FontAttributes="Bold"
+                                       FontSize="15"
+                                       VerticalOptions="Center" />
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+    </VerticalStackLayout>
+</ContentView>

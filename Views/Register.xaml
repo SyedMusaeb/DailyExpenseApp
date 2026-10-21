@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DailyExpense.Views.Register"
+             Title="Register">
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Spacing="8"
+                             Padding="10">
+            <!--<Image Source="home.png"
+                   HeightRequest="20"
+                   WidthRequest="20"
+                   HorizontalOptions="Start">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Home_Clicked" />
+                </Image.GestureRecognizers>
+            </Image>-->
+
+            <Image Source="adduser.png"
+                   HeightRequest="70"
+                   WidthRequest="70"
+                   />
+
+            <Label Text="Create Account!"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   Margin="0,0,0,10" />
+            <!--<Entry Placeholder="Username"
+                   PlaceholderColor="Grey"
+                   x:Name="txtemail"
+                   FontSize="14"
+                   TextColor="black"
+                   FontAttributes="Bold" />-->
+            <Label Text="Full Name"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"
+                   FontSize="12"
+                   />
+            <Border Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="user.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <Entry Grid.Column="1"
+                           Placeholder="Enter Your Full Name"
+                           Margin="0,0,0,0"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           x:Name="txtname"
+                           />
+                </Grid>
+            </Border>
+
+            <!--<Entry Placeholder="Password"
+                   PlaceholderColor="Grey"
+                   x:Name="txtpassword"
+                   IsPassword="True"
+                   FontSize="14"
+                   TextColor="black"
+                   FontAttributes="Bold" />-->
+            <Label Text="Mobile Number"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"
+                   FontSize="12" />
+
+            <Border Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="phonecall.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <Entry Grid.Column="1"
+                           Placeholder="Enter Your Mobile number"
+                           Margin="0,0,0,0"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           x:Name="txtphone" 
+                           MaxLength="10"
+                           Keyboard="Numeric"
+                           />
+                </Grid>
+            </Border>
+
+            <!--<Entry Placeholder="Confirm Password"
+                   PlaceholderColor="Grey"
+                   x:Name="txtconfirmpassword"
+                   IsPassword="True"
+                   FontSize="14"
+                   TextColor="black"
+                   FontAttributes="Bold" />-->
+
+
+            <Label Text="Password"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"
+                   FontSize="12" />
+
+            <Border Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="lock.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <Entry Grid.Column="1"
+                           Placeholder="Enter New Password"
+                           Margin="0,0,0,0"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           IsPassword="True"
+                           x:Name="txtpassword" />
+
+                    <ImageButton Grid.Column="2"
+                                 x:Name="btnEye"
+                                 Source="closedeyes.png"
+                                 Margin="11"
+                                 BackgroundColor="Transparent"
+                                 Clicked="OnEyeClicked"
+                                 HorizontalOptions="End" />
+
+                </Grid>
+            </Border>
+
+            <Label Text="Confirm Password"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"
+                   FontSize="12" />
+
+            <Border Stroke="#A9A9A9"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="45"
+                    Margin="0,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+
+                <Grid ColumnDefinitions="30,*">
+                    <Image Grid.Column="0"
+                           Source="lock.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+
+                    <Entry Grid.Column="1"
+                           Placeholder="Enter Confirm Password"
+                           Margin="0,0,0,0"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"
+                           IsPassword="True"
+                           x:Name="txtconfirmpassword" />
+
+                    <ImageButton Grid.Column="2"
+                                 x:Name="btnEyeconfirm"
+                                 Source="closedeyes.png"
+                                 Margin="11"
+                                 BackgroundColor="Transparent"
+                                 Clicked="OnEyeConfirmClicked"
+                                 HorizontalOptions="End" />
+
+                </Grid>
+            </Border>
+
+
+
+
+            <Button Margin="0,10,0,0"
+                    Text="New Registration"
+                    BackgroundColor="#0067EE"
+                    x:Name="register"
+                    Clicked="register_Clicked" />
+            <Button Margin="0,0,0,0"
+                    Text="Login"
+                    BackgroundColor="#0067EE"
+                    x:Name="login"
+                    Clicked="login_Clicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

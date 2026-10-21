@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DailyExpense.Homepage"
+             Title="Homepage">
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Spacing="12"
+                             Padding="24">
+            <Label Text="Welcome to Daily Expense!"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   FontSize="24"
+                   FontAttributes="Bold" />
+            <Button Margin="0,300,0,0"
+                    Text="Get Started"
+                    BackgroundColor="Black"
+                    Clicked="Button_Clicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage> 

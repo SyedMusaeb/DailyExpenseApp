@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DailyExpense.Views.ForgotPaasword"
+             Title="ForgotPaasword">
+    <ScrollView>
+        <VerticalStackLayout VerticalOptions="Center"
+                             Spacing="14"
+                             Padding="24">
+
+            <Image Source="home.png"
+                   HeightRequest="20"
+                   WidthRequest="20"
+                   HorizontalOptions="Start">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Home_Clicked" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Image Source="house.png"
+                   HeightRequest="80"
+                   WidthRequest="80"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10" />
+
+            <Label Text="Change Password"
+                   HorizontalOptions="Center"
+                   FontSize="22"
+                   FontAttributes="Bold" />
+
+            <Label Text="Enter your old password and set a new one"
+                   HorizontalOptions="Center"
+                   FontSize="12"
+                   TextColor="Gray"
+                   Margin="0,0,0,10" />
+
+
+            <Label Text="Registered Mobile Number"
+                   FontSize="13"
+                   TextColor="Gray" />
+            <Border x:Name="borderregisteredmobilenumber" 
+                Stroke="#A9A9A9"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="48">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Entry x:Name="txtPhone"
+                       Placeholder="Enter your mobile number"
+                       Keyboard="Telephone"
+                       BackgroundColor="Transparent"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <!-- OLD PASSWORD -->
+            <Label Text="Old Password"
+                   FontSize="13"
+                   TextColor="Gray" />
+            <Border x:Name="borderOldPassword"
+                    Stroke="#A9A9A9"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="48">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="30,*,30">
+                    <Image Grid.Column="0"
+                           Source="padlock.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+                    <Entry Grid.Column="1"
+                           x:Name="txtOldPassword"
+                           Placeholder="Enter old password"
+                           IsPassword="True"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center" />
+                    <ImageButton Grid.Column="2"
+                                 x:Name="btnEyeOld"
+                                 Source="closedeyes.png"
+                                 Margin="5"
+                                 BackgroundColor="Transparent"
+                                 HorizontalOptions="End"
+                                 VerticalOptions="Center"
+                                 Clicked="OnEyeOldClicked" />
+                </Grid>
+            </Border>
+
+            <!-- NEW PASSWORD -->
+            <Label Text="New Password"
+                   FontSize="13"
+                   TextColor="Gray" />
+            <Border x:Name="borderNewPassword"
+                    Stroke="#A9A9A9"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="48">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="30,*,30">
+                    <Image Grid.Column="0"
+                           Source="padlock.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+                    <Entry Grid.Column="1"
+                           x:Name="txtNewPassword"
+                           Placeholder="Enter new password"
+                           IsPassword="True"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center" />
+                    <ImageButton Grid.Column="2"
+                                 x:Name="btnEyeNew"
+                                 Source="closedeyes.png"
+                                 Margin="5"
+                                 BackgroundColor="Transparent"
+                                 HorizontalOptions="End"
+                                 VerticalOptions="Center"
+                                 Clicked="OnEyeNewClicked" />
+                </Grid>
+            </Border>
+
+            <!-- CONFIRM PASSWORD -->
+            <Label Text="Confirm New Password"
+                   FontSize="13"
+                   TextColor="Gray" />
+            <Border x:Name="borderConfirmPassword"
+                    Stroke="#A9A9A9"
+                    BackgroundColor="White"
+                    Padding="10,0"
+                    HeightRequest="48">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="30,*,30">
+                    <Image Grid.Column="0"
+                           Source="padlock.png"
+                           HeightRequest="20"
+                           VerticalOptions="Center" />
+                    <Entry Grid.Column="1"
+                           x:Name="txtConfirmPassword"
+                           Placeholder="Re-enter new password"
+                           IsPassword="True"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center" />
+                    <ImageButton Grid.Column="2"
+                                 x:Name="btnEyeConfirm"
+                                 Source="closedeyes.png"
+                                 Margin="5"
+                                 BackgroundColor="Transparent"
+                                 HorizontalOptions="End"
+                                 VerticalOptions="Center"
+                                 Clicked="OnEyeConfirmClicked" />
+                </Grid>
+            </Border>
+
+            <Button Text="Change Password"
+                    BackgroundColor="#0067EE"
+                    TextColor="White"
+                    CornerRadius="20"
+                    HeightRequest="50"
+                    Margin="0,15,0,0"
+                    x:Name="forgotPassword"
+                    Clicked="forgotPassword_Clicked" />
+
+            <Button Text="Back to Login"
+                    BackgroundColor="Transparent"
+                    TextColor="#0067EE"
+                    x:Name="login"
+                    Clicked="login_Clicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
