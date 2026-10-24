@@ -68,7 +68,7 @@ namespace DailyExpense.FirebaseClass
             }
             catch
             {
-                return "Mobile number ya old password galat hai.";
+                return "Mobile number or old password is wrong";
             }
 
             try
@@ -80,7 +80,7 @@ namespace DailyExpense.FirebaseClass
             catch (Exception ex)
             {
                 auth.SignOut();
-                return "Password change nahi hua. " + ex.Message;
+                return "Error. " + ex.Message;
             }
         }
     }

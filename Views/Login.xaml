@@ -112,6 +112,13 @@
                     BackgroundColor="#0067EE"
                     x:Name="login"
                     Clicked="login_Clicked" />
+            <ActivityIndicator x:Name="loader"
+                               IsRunning="False"
+                               IsVisible="False"
+                               Color="#0067EE"
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               HorizontalOptions="Center" />
             <Label Text="New Registration?"
                    TextColor="Blue"
                    FontSize="12"

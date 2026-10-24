@@ -48,6 +48,8 @@ public partial class Login : ContentPage
                 return;
             }
 
+            SetLoading(true);
+
             // ---- FIREBASE LOGIN ----
             bool ok = await FirebaseService.Login(txtphoneusername.Text.Trim(), txtpassword.Text);
 
@@ -88,6 +90,7 @@ public partial class Login : ContentPage
         finally
         {
             if (btn != null) btn.IsEnabled = true;
+            SetLoading(false);
         }
     }
 
@@ -119,6 +122,15 @@ public partial class Login : ContentPage
     {
         borderusername.Stroke = Colors.Gray;
         borderpassword.Stroke = Colors.Gray;
+    }
+
+    private void SetLoading(bool isLoading)
+    {
+        loader.IsVisible = isLoading;
+        loader.IsRunning = isLoading;
+
+        login.IsEnabled = !isLoading;
+        login.Text = isLoading ? "Please wait..." : "Submit";
     }
 
 }

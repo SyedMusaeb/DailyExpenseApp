@@ -1,4 +1,5 @@
-using DailyExpense.FirebaseClass;
+﻿using DailyExpense.FirebaseClass;
+using DailyExpense.HelperModel;
 using DailyExpense.Models;
 using Firebase.Database.Query;
 
@@ -28,6 +29,7 @@ public partial class CategoryDetailPage : ContentView
 
     private async Task LoadFromFirebaseAsync()
     {
+        loader.Show();
         try
         {
             var result = await FirebaseService.Db
@@ -52,11 +54,15 @@ public partial class CategoryDetailPage : ContentView
             await Application.Current.MainPage.DisplayAlert("Error",
                 "Data load nahi hua. Internet check karo.\n" + ex.Message, "OK");
         }
+        finally
+        {
+            loader.Hide();
+        }
     }
 
     private void ShowItems()
     {
-        lblSelectedMonth.Text = currentMonth.ToString("MMMM yyyy");
+        lblSelectedMonth.Text = currentMonth.ToString("MMMM yyyy") + "  ▾";
 
         DateTime startDate = new DateTime(currentMonth.Year, currentMonth.Month, 1);
         DateTime nextMonth = startDate.AddMonths(1);
@@ -103,5 +109,14 @@ public partial class CategoryDetailPage : ContentView
         if (item == null) return;
 
         OnEditRequested?.Invoke(item.Id);
+    }
+
+    private async void OnMonthLabelTapped(object sender, EventArgs e)
+    {
+        var picked = await MonthPicker.PickAsync(currentMonth);
+        if (picked == null) return;
+
+        currentMonth = picked.Value;
+        ShowItems();
     }
 }

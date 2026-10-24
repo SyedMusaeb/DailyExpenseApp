@@ -21,9 +21,9 @@ public partial class EditExpensePage : ContentView
 
     private async Task LoadAllAsync(string expenseId)
     {
+        loader.Show();
         try
         {
-            // 1. categories load karo
             var catResult = await FirebaseService.Db
                 .Child("Data")
                 .Child("categories")
@@ -35,7 +35,6 @@ public partial class EditExpensePage : ContentView
                 .OrderBy(c => c.Id)
                 .ToList();
 
-            // 2. expense load karo
             expense = await FirebaseService.Db
                 .Child("expenses")
                 .Child(expenseId)
@@ -49,14 +48,12 @@ public partial class EditExpensePage : ContentView
             }
 
             expense.Id = expenseId;
-
-            // 3. ab Picker set karo aur screen bharo (yahi wo code hai)
             var names = categoryList.Select(c => c.CategoryName).ToList();
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 pickerCategory.ItemsSource = names;
-                LoadData();     // items set hone ke baad hi selection karo
+                LoadData(); 
             });
         }
         catch (Exception ex)
@@ -64,23 +61,39 @@ public partial class EditExpensePage : ContentView
             await Application.Current.MainPage.DisplayAlert("Error",
                 "Data load nahi hua. Internet check karo.\n" + ex.Message, "OK");
         }
+        finally
+        {
+            loader.Hide();
+        }
     }
-    private void LoadData()
+    private async void LoadData()
     {
-        if (expense == null) return;
+       
+        try
+        {
+            if (expense == null) return;
 
-        //int index = categoryList.FindIndex(c => c.Id == expense.CategoryId);
-        //if (index == -1)
+            //int index = categoryList.FindIndex(c => c.Id == expense.CategoryId);
+            //if (index == -1)
             int index = categoryList.FindIndex(c => c.CategoryName == expense.CategoryName);
 
-        pickerCategory.SelectedIndex = index;
-        txtsamanname.Text = expense.SamanName;
-        txtsamanweight.Text = expense.SamanWeight.ToString();
-        //pickerUnit.SelectedItem = null;
-        txtamount.Text = expense.Amount.ToString();
-        //pickerPaymentMode.SelectedItem = expense.PaymentMode;
-        //txtnotes.Text = expense.Notes;
-        dpDate.Date = expense.Date;
+            pickerCategory.SelectedIndex = index;
+            txtsamanname.Text = expense.SamanName;
+            txtsamanweight.Text = expense.SamanWeight.ToString();
+            //pickerUnit.SelectedItem = null;
+            txtamount.Text = expense.Amount.ToString();
+            //pickerPaymentMode.SelectedItem = expense.PaymentMode;
+            //txtnotes.Text = expense.Notes;
+            dpDate.Date = expense.Date;
+            dpDate.MaximumDate = DateTime.Today;
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert("Error",
+                "Error.\n" + ex.Message, "OK");
+        }
+        
+
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
@@ -136,7 +149,7 @@ public partial class EditExpensePage : ContentView
         catch (Exception ex)
         {
             await Application.Current.MainPage.DisplayAlert("Error",
-                "Update nahi hua. Internet check karo.\n" + ex.Message, "OK");
+                "Error.\n" + ex.Message, "OK");
         }
         finally
         {
@@ -166,7 +179,7 @@ public partial class EditExpensePage : ContentView
         catch (Exception ex)
         {
             await Application.Current.MainPage.DisplayAlert("Error",
-                "Delete nahi hua. Internet check karo.\n" + ex.Message, "OK");
+                "Error.\n" + ex.Message, "OK");
         }
         finally
         {
@@ -196,7 +209,7 @@ public partial class EditExpensePage : ContentView
         catch (Exception ex)
         {
             await Application.Current.MainPage.DisplayAlert("Error",
-                "Restore nahi hua. Internet check karo.\n" + ex.Message, "OK");
+                "Error.\n" + ex.Message, "OK");
         }
         finally
         {

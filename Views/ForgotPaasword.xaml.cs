@@ -97,6 +97,7 @@ public partial class ForgotPaasword : ContentPage
                 txtNewPassword.Focus();
                 return;
             }
+            SetLoading(true);
 
             // ---- FIREBASE: old password verify + naya password set ----
             string error = await FirebaseService.ChangePassword(
@@ -123,6 +124,7 @@ public partial class ForgotPaasword : ContentPage
         finally
         {
             isBusy = false;
+            SetLoading(false);
         }
     }
 
@@ -130,5 +132,12 @@ public partial class ForgotPaasword : ContentPage
     {
         Application.Current.MainPage = new Login();
     }
+    private void SetLoading(bool isLoading)
+    {
+        loader.IsVisible = isLoading;
+        loader.IsRunning = isLoading;
 
+        login.IsEnabled = !isLoading;
+        login.Text = isLoading ? "Please wait..." : "Submit";
+    }
 }

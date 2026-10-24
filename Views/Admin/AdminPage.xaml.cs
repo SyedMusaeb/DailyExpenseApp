@@ -1,4 +1,5 @@
-using DailyExpense.FirebaseClass;
+﻿using DailyExpense.FirebaseClass;
+using DailyExpense.HelperModel;
 using DailyExpense.Models;
 using DailyExpense.Views.Admin.Model;
 
@@ -11,7 +12,7 @@ public partial class AdminPage : ContentView
     private DateTime currentMonth;
     //private List<NewRegistration> userList;
     private List<NewRegistration> userList = new List<NewRegistration>();
-    private List<Expense> allExpenses = new List<Expense>();   // Firebase se aaya sab data (cache)
+    private List<Expense> allExpenses = new List<Expense>();  
     private bool isReady = false;
     public AdminPage()
     {
@@ -31,76 +32,9 @@ public partial class AdminPage : ContentView
 
     public void Refresh() => _ = LoadUsersAndExpensesAsync();
 
-    //private void LoadData()
-    //{
-    //    lblSelectedMonth.Text = currentMonth.ToString("MMMM yyyy");
-    //    lblMonthLabel.Text = currentMonth.ToString("MMM yyyy") + " Total";
-
-    //    DateTime startDate = new DateTime(currentMonth.Year, currentMonth.Month, 1);
-    //    DateTime endDate = startDate.AddMonths(1).AddDays(-1);
-
-    //    var expenses = App.db.Table<Expense>()
-    //        .Where(x => x.Date >= startDate && x.Date <= endDate)
-    //        .ToList();
-
-    //    // user filter (index 0 = All Users)
-    //    if (pickerUser.SelectedIndex > 0)
-    //    {
-    //        string userId = userList[pickerUser.SelectedIndex - 1].UserI;
-    //        expenses = expenses.Where(x => x.UserId == userId).ToList();    
-    //    }
-
-    //    // totals
-    //    lblTotal.Text = $" {expenses.Where(x => !x.IsDeleted).Sum(x => x.Amount):N0}";
-    //    lblDeletedCount.Text = expenses.Count(x => x.IsDeleted).ToString();
-
-    //    if (!swDeleted.IsToggled)
-    //        expenses = expenses.Where(x => !x.IsDeleted).ToList();
-
-    //    var items = expenses
-    //        .OrderByDescending(x => x.Date)
-    //        .Select(x => new AdminExpenseItem
-    //        {
-    //            Id = x.Id,
-    //            SamanName = x.SamanName,
-    //            CategoryName = x.CategoryName,
-    //            UserName = userList.FirstOrDefault(u => u.UserI == x.UserId)?.FullName ?? "Unknown",
-    //            Date = x.Date,
-    //            Amount = x.Amount,
-    //            WeightDisplay = $"{x.SamanWeight} {x.Unit}",
-    //            IsDeleted = x.IsDeleted,
-    //            StatusText = x.IsDeleted ? "Deleted" : "",
-    //            CardColor = x.IsDeleted ? "#FDECEC" : "#FFFFFF"
-    //        })
-    //        .ToList();
-
-    //    cvAdmin.ItemsSource = items;
-    //}
-
-    //private void OnFilterChanged(object sender, EventArgs e) => LoadData();
-    //private void OnSwitchToggled(object sender, ToggledEventArgs e) => LoadData();
-
-    //private void OnPreviousMonth(object sender, EventArgs e)
-    //{
-    //    currentMonth = currentMonth.AddMonths(-1);
-    //    LoadData();
-    //}
-
-    //private void OnNextMonth(object sender, EventArgs e)
-    //{
-    //    currentMonth = currentMonth.AddMonths(1);
-    //    LoadData();
-    //}
-
-    //private void OnItemTapped(object sender, TappedEventArgs e)
-    //{
-    //    var item = (sender as Border)?.BindingContext as AdminExpenseItem;
-    //    if (item != null)
-    //        OnEditRequested?.Invoke(item.Id);
-    //}
-
     private async Task LoadUsersAndExpensesAsync()
     {
+        loader.Show();
         try
         {
             var userResult = await FirebaseService.Db
@@ -132,22 +66,11 @@ public partial class AdminPage : ContentView
         catch (Exception ex)
         {
             await Application.Current.MainPage.DisplayAlert("Error",
-                "Admin data load nahi hua. Internet check karo.\n" + ex.Message, "OK");
+                "Error.\n" + ex.Message, "OK");
         }
-    }
-
-    // ---- REFRESH: sirf expenses dobara lao, user filter wahi rehne do ----
-    private async Task ReloadExpensesAsync()
-    {
-        try
+        finally
         {
-            await FetchExpensesAsync();
-            await MainThread.InvokeOnMainThreadAsync(() => ShowData());
-        }
-        catch (Exception ex)
-        {
-            await Application.Current.MainPage.DisplayAlert("Error",
-                "Data refresh nahi hua.\n" + ex.Message, "OK");
+            loader.Hide();
         }
     }
 
@@ -165,13 +88,11 @@ public partial class AdminPage : ContentView
             })
             .ToList();
     }
-
-    // ---- MEMORY WALE DATA SE SCREEN BHARO ----
     private void ShowData()
     {
         if (!isReady) return;
 
-        lblSelectedMonth.Text = currentMonth.ToString("MMMM yyyy");
+        lblSelectedMonth.Text = currentMonth.ToString("MMMM yyyy") + "  ▾";
         lblMonthLabel.Text = currentMonth.ToString("MMM yyyy") + " Total";
 
         DateTime startDate = new DateTime(currentMonth.Year, currentMonth.Month, 1);
@@ -188,8 +109,7 @@ public partial class AdminPage : ContentView
             expenses = expenses.Where(x => x.UserId == userId).ToList();
         }
 
-        // totals (deleted ko total me nahi jodte)
-        lblTotal.Text = $"? {expenses.Where(x => !x.IsDeleted).Sum(x => x.Amount):N0}";
+        lblTotal.Text = $" {expenses.Where(x => !x.IsDeleted).Sum(x => x.Amount):N0}";
         lblDeletedCount.Text = expenses.Count(x => x.IsDeleted).ToString();
 
         if (!swDeleted.IsToggled)
@@ -237,5 +157,14 @@ public partial class AdminPage : ContentView
         var item = (sender as Border)?.BindingContext as AdminExpenseItem;
         if (item != null)
             OnEditRequested?.Invoke(item.Id);
+    }
+
+    private async void OnMonthLabelTapped(object sender, EventArgs e)
+    {
+        var picked = await MonthPicker.PickAsync(currentMonth);
+        if (picked == null) return;
+
+        currentMonth = picked.Value;
+        ShowData();
     }
 }

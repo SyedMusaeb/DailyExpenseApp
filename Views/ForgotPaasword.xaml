@@ -163,6 +163,13 @@
                     Margin="0,15,0,0"
                     x:Name="forgotPassword"
                     Clicked="forgotPassword_Clicked" />
+            <ActivityIndicator x:Name="loader"
+                               IsRunning="False"
+                               IsVisible="False"
+                               Color="#0067EE"
+                               HeightRequest="30"
+                               WidthRequest="30"
+                               HorizontalOptions="Center" />
 
             <Button Text="Back to Login"
                     BackgroundColor="Transparent"

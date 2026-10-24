@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:v="clr-namespace:DailyExpense.Views.Loader"
              x:Class="DailyExpense.Views.EditExpensePage">
     <ScrollView>
-        <VerticalStackLayout VerticalOptions="Start"
+        <Grid>
+            <VerticalStackLayout VerticalOptions="Start"
                              Spacing="8"
                              Padding="10,5,10,10">
 
@@ -178,5 +180,7 @@
                     Clicked="OnDeleteClicked" />
 
         </VerticalStackLayout>
+            <v:LoadingOverlay x:Name="loader" />
+        </Grid>
     </ScrollView>
 </ContentView>

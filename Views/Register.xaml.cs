@@ -55,6 +55,7 @@ public partial class Register : ContentPage
                 txtconfirmpassword.Focus();
                 return;
             }
+            SetLoading(true);
 
             // ---- FIREBASE REGISTER ----
             await FirebaseService.Register(txtname.Text.Trim(), txtphone.Text.Trim(), txtpassword.Text);
@@ -75,6 +76,7 @@ public partial class Register : ContentPage
         finally
         {
             isBusy = false;
+            SetLoading(false);
         }
     }
     private void Home_Clicked(object sender, EventArgs e)
@@ -102,6 +104,15 @@ public partial class Register : ContentPage
             btnEyeconfirm.Source = "closedeyes.png";   // password chupa hua
         else
             btnEyeconfirm.Source = "eye.png";    // password dikh raha
+    }
+
+    private void SetLoading(bool isLoading)
+    {
+        loader.IsVisible = isLoading;
+        loader.IsRunning = isLoading;
+
+        login.IsEnabled = !isLoading;
+        login.Text = isLoading ? "Please wait..." : "Submit";
     }
 
 

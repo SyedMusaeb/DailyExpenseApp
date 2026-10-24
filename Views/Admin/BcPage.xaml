@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:v="clr-namespace:DailyExpense.Views.Loader"
+             x:Class="DailyExpense.Views.Admin.BcPage">
+    <Grid>
+    <Grid RowDefinitions="Auto,Auto,Auto,*"
+          Padding="15"
+          RowSpacing="8">
+
+        <!-- TABS -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,*"
+              ColumnSpacing="8">
+            <Button x:Name="btnTabMonth"
+                    Text="Monthly Entry"
+                    CornerRadius="10"
+                    HeightRequest="40"
+                    Clicked="OnTabMonth" />
+            <Button x:Name="btnTabSummary"
+                    Grid.Column="1"
+                    Text="Cycle Summary"
+                    CornerRadius="10"
+                    HeightRequest="40"
+                    Clicked="OnTabSummary" />
+        </Grid>
+
+        <!-- MONTH NAVIGATOR -->
+        <Border Grid.Row="1"
+                Stroke="#E0E0E0"
+                BackgroundColor="#F5F5F5"
+                Padding="10"
+                HeightRequest="45">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Label Text="◀"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       Padding="10,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPreviousMonth" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Grid.Column="1"
+                       x:Name="lblMonth"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+                <Label Grid.Column="2"
+                       Text="▶"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       Padding="10,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNextMonth" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </Border>
+
+        <!-- TOTAL -->
+        <Border Grid.Row="2"
+                Stroke="#0067EE"
+                BackgroundColor="#EAF2FF"
+                Padding="15,8">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="12" />
+            </Border.StrokeShape>
+            <VerticalStackLayout>
+                <Label x:Name="lblCycle"
+                       FontSize="11"
+                       TextColor="Gray" />
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label x:Name="lblTotalTitle"
+                           FontSize="14"
+                           TextColor="#0067EE"
+                           VerticalOptions="Center" />
+                    <Label Grid.Column="1"
+                           x:Name="lblTotal"
+                           Text="₹ 0"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#0067EE" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- MONTH LIST (admin tap karke amount daalta hai) -->
+        <CollectionView Grid.Row="3"
+                        x:Name="cvMonth">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#E0E0E0"
+                            BackgroundColor="{Binding RowColor}"
+                            Padding="14"
+                            Margin="0,4">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRowTapped" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding Name}"
+                                   FontAttributes="Bold"
+                                   FontSize="15"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding AmountText}"
+                                   TextColor="{Binding AmountColor}"
+                                   FontAttributes="Bold"
+                                   FontSize="15"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- CYCLE SUMMARY -->
+        <CollectionView Grid.Row="3"
+                        x:Name="cvSummary"
+                        IsVisible="False">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#E0E0E0"
+                            BackgroundColor="White"
+                            Padding="14"
+                            Margin="0,4">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto,60">
+                            <Label Text="{Binding Name}"
+                                   FontAttributes="Bold"
+                                   FontSize="15"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding TotalText}"
+                                   FontSize="15"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="2"
+                                   Text="{Binding PercentText}"
+                                   FontSize="14"
+                                   TextColor="#0067EE"
+                                   HorizontalTextAlignment="End"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+        <v:LoadingOverlay x:Name="loader" />
+    </Grid>
+</ContentView>

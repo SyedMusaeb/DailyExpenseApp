@@ -1,21 +1,50 @@
-using DailyExpense.FirebaseClass;
+﻿using DailyExpense.FirebaseClass;
 using DailyExpense.Models;
 using DailyExpense.Views;
 using DailyExpense.Views.Admin;
+using Microsoft.Maui.Controls;
 
 namespace DailyExpense.MasterView;
 
 public partial class MasterPage : ContentPage
 {
     private Stack<View> navigationHistory = new Stack<View>();
+    private DateTime lastBackPress = DateTime.MinValue;
+
+    protected override bool OnBackButtonPressed()
+    {
+        // 1. pichla page maujood hai to ek step peeche jao (← arrow jaisa hi)
+        if (navigationHistory.Count > 0)
+        {
+            OnBackClicked(null, null);
+            return true;            // true = hamne handle kar liya, app band mat karo
+        }
+
+        // 2. pehli screen par hain: 2 second ke andar dobara back dabane par hi app band ho
+        if ((DateTime.Now - lastBackPress).TotalSeconds < 2)
+            return false;           // false = system app band kar de
+
+        lastBackPress = DateTime.Now;
+
+            #if ANDROID
+                    Android.Widget.Toast.MakeText(
+                        Android.App.Application.Context,
+                        "Please press back button to exit",
+                        Android.Widget.ToastLength.Short).Show();
+            #endif
+
+        return true;
+    }
     public MasterPage()
 	{
 		InitializeComponent();
         LoadUserSession();
         //PageContent.Content = new DailyExpenseForm();
         //ShowExpenseForm();
+        
 
         lblMenu.IsVisible = Session.IsAdmin;
+        lblMenu.IsVisible = true;
 
         if (Session.IsAdmin)
             ShowAdminPage();
@@ -142,8 +171,16 @@ public partial class MasterPage : ContentPage
 
     private async void OnMenuClicked(object sender, EventArgs e)
     {
+        var options = new List<string> { "Add Expense", "Expense List", "BC Sheet" };
+        if (Session.IsAdmin)
+        {
+            options.Add("BC Members");
+            options.Add("Admin Panel");
+        }
+
+
         string choice = await DisplayActionSheet("Menu", "Cancel", null,
-            "Add Expense", "Expense List", "Admin Panel");
+            options.ToArray());
 
         switch (choice)
         {
@@ -164,9 +201,19 @@ public partial class MasterPage : ContentPage
                 imgBack.IsVisible = false;
                 ShowAdminPage();
                 break;
+
+            case "BC Members":
+                navigationHistory.Clear(); imgBack.IsVisible = false;
+                NavigateTo(new BcMembersPage(), addToHistory: false);
+                break;
+
+            case "BC Sheet":
+                navigationHistory.Clear(); imgBack.IsVisible = false;
+                NavigateTo(new BcPage(startOnSummary: !Session.IsAdmin), addToHistory: false);
+                break;
         }
     }
-
+    
     private void ShowAdminPage()
     {
         var adminPage = new AdminPage();
@@ -180,5 +227,7 @@ public partial class MasterPage : ContentPage
 
         NavigateTo(adminPage, addToHistory: false);
     }
+
+
 
 }

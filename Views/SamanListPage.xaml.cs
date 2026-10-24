@@ -28,6 +28,7 @@ public partial class SamanListPage : ContentView
 
     private async Task LoadFromFirebaseAsync()
     {
+        loader.Show();
         try
         {
             var result = await FirebaseService.Db
@@ -50,7 +51,11 @@ public partial class SamanListPage : ContentView
         catch (Exception ex)
         {
             await Application.Current.MainPage.DisplayAlert("Error",
-                "Data load nahi hua. Internet check karo.\n" + ex.Message, "OK");
+                "Error.\n" + ex.Message, "OK");
+        }
+        finally
+        {
+            loader.Hide();
         }
     }
 
@@ -60,7 +65,7 @@ public partial class SamanListPage : ContentView
         lblTotalAmount.Text = $"₹ {userExpenses.Sum(x => x.Amount):N0}";
 
         // selected month
-        lblSelectedMonth.Text = currentMonth.ToString("MMMM yyyy");
+        lblSelectedMonth.Text = currentMonth.ToString("MMMM yyyy") + "  ▾";
         lblMonthLabel.Text = currentMonth.ToString("MMMM yyyy") + " Total";
 
         DateTime startDate = new DateTime(currentMonth.Year, currentMonth.Month, 1);
@@ -119,6 +124,15 @@ public partial class SamanListPage : ContentView
     private void OnNextMonth(object sender, EventArgs e)
     {
         currentMonth = currentMonth.AddMonths(1);
+        ShowData();
+    }
+
+    private async void OnMonthLabelTapped(object sender, EventArgs e)
+    {
+        var picked = await MonthPicker.PickAsync(currentMonth);
+        if (picked == null) return;
+
+        currentMonth = picked.Value;
         ShowData();
     }
 }
